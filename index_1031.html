@@ -1,0 +1,2006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alibaba Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+    <style>
+        /* === CSS Code Starts Here === */
+        :root {
+            /* Official Alibaba Color Palette */
+            --alibaba-orange: #FF6600;
+            --alibaba-dark-blue: #1A284D;
+            /* Feature Section Colors based on your image */
+            --feature-section-bg: #291E19; /* Dark brown from the screenshot */
+            --feature-card-bg: transparent; /* No card background */
+            --feature-card-hover-bg: #3a2c25; /* Darker brown on card hover */
+
+            --background-body: #FFFFFF; /* Main background color changed to white */
+            --background-light: #F7F8FA; /* Lighter background for some sections */
+            --background-white: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --text-white-primary: #FFFFFF; /* For main titles in dark section */
+            --text-white-secondary: #CCCCCC; /* For descriptions in dark section */
+            --border-color: #E0E2E6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-body);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* === NEW DARK HEADER STYLES === */
+        .dark-header {
+            background-color: #000; /* Set background to black */
+            color: white;
+            padding: 5px 0;
+            position: sticky; /* Make header sticky */
+            top: 0;
+            z-index: 1001;
+        }
+        .header-top-row, .header-bottom-row {
+            padding: 5px 0;
+        }
+        .header-top-row {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .header-top-content, .header-bottom-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-logo-dark img {
+            height: 35px;
+            display: block;
+            filter: brightness(0) invert(1); /* Makes the logo white */
+        }
+        .header-top-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .header-top-nav .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-white-primary);
+            font-size: 0.9rem;
+        }
+        .header-top-nav .nav-item i {
+            font-size: 1.2rem;
+        }
+        .header-top-nav .nav-item .flag {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .create-account-btn {
+            background-color: var(--alibaba-orange);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+        .create-account-btn:hover {
+            opacity: 0.9;
+        }
+        .header-main-nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        .header-main-nav a {
+            color: var(--text-white-primary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .header-main-nav a:hover {
+            text-decoration: underline;
+        }
+        
+        /* === NEW: CATEGORIES DROPDOWN STYLES START === */
+        .categories-dropdown-container {
+            position: relative; /* This is the anchor for the absolute dropdown */
+        }
+
+        .categories-dropdown-menu {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: var(--background-white);
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 280px;
+            margin-top: 10px;
+            z-index: 1002;
+            overflow: hidden;
+        }
+
+        .categories-dropdown-menu.show {
+            display: block; /* Shown when the 'show' class is added */
+        }
+
+        .categories-dropdown-menu ul {
+            list-style: none;
+            padding: 8px 0;
+            max-height: 400px; /* Limit height and allow scrolling */
+            overflow-y: auto;
+        }
+
+        /* Custom scrollbar for dropdown */
+        .categories-dropdown-menu ul::-webkit-scrollbar {
+            width: 6px;
+        }
+        .categories-dropdown-menu ul::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .categories-dropdown-menu ul::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        .categories-dropdown-menu ul::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+
+        .categories-dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            transition: background-color 0.2s;
+        }
+
+        .categories-dropdown-menu li a:hover {
+            background-color: var(--background-light);
+            text-decoration: none;
+        }
+
+        .categories-dropdown-menu li a i {
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .categories-dropdown-menu .dropdown-header {
+            font-weight: bold;
+            border-bottom: 2px solid var(--alibaba-orange);
+            padding-bottom: 12px;
+            margin-bottom: 5px;
+        }
+        .categories-dropdown-menu .dropdown-header a {
+             color: var(--text-dark) !important;
+        }
+         /* === NEW: CATEGORIES DROPDOWN STYLES END === */
+
+
+        /* --- Hero Section Styling --- */
+        .hero {
+            background: url('https://i.imgur.com/uG9t6iG.jpg') no-repeat center center;
+            background-size: cover;
+            color: var(--background-white);
+            position: relative;
+            padding: 90px 0; /* Adjusted padding since header is no longer absolute */
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 750px; /* Limit the width of the content */
+            margin: 0; /* Align to the left */
+        }
+
+        .hero-subheading {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .hero-heading {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+
+        .hero-search-form {
+            display: flex;
+            height: 50px;
+            background-color: var(--background-white);
+            border-radius: 25px;
+            overflow: hidden;
+            padding: 4px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        .hero-search-input {
+            flex-grow: 1;
+            border: none;
+            padding: 0 25px;
+            font-size: 1rem;
+            outline: none;
+            color: var(--text-dark);
+            border-radius: 25px 0 0 25px;
+        }
+
+        .hero-search-button {
+            background-color: var(--alibaba-orange);
+            color: white;
+            border: none;
+            padding: 0 35px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .hero-search-button:hover {
+            opacity: 0.9;
+        }
+
+        .frequently-searched {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.9rem;
+        }
+
+        .frequently-searched span {
+            color: #f0f0f0;
+        }
+
+        .frequently-searched a {
+            color: var(--background-white);
+            text-decoration: none;
+            padding: 4px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .frequently-searched a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Features Section Styling --- */
+        .features-section {
+            background-color: var(--feature-section-bg); /* Darker brown background */
+            padding: 40px 0;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .feature-card {
+            padding: 25px;
+            border-radius: 12px;
+            background-color: var(--feature-card-bg);
+            transition: background-color 0.3s;
+        }
+        .feature-card:hover {
+            background-color: var(--feature-card-hover-bg); /* Darker on hover */
+        }
+        .feature-icon {
+            font-size: 1.8rem;
+            color: var(--text-white-secondary);
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            color: var(--text-white-primary); /* White text for titles */
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            font-size: 0.9rem;
+            color: var(--text-white-secondary); /* Lighter white for descriptions */
+            line-height: 1.6;
+        }
+        
+        /* --- Category Carousel Section --- */
+        .category-carousel-section {
+            padding: 50px 0;
+            background-color: var(--background-white);
+        }
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .section-title-left {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        .carousel-wrapper {
+            position: relative;
+        }
+        .category-carousel {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 20px;
+            padding: 10px 0;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+        }
+        .category-carousel::-webkit-scrollbar {
+            display: none; /* Hide for Chrome/Safari */
+        }
+        .category-circle {
+            flex: 0 0 140px; /* Prevent shrinking, set fixed width */
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .category-circle:hover {
+            border-color: var(--alibaba-orange);
+            box-shadow: 0 0 0 3px rgba(255, 102, 0, 0.2);
+        }
+        .category-circle i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+        .category-circle span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: var(--background-white);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+        .carousel-arrow.left { left: -20px; }
+        .carousel-arrow.right { right: -20px; }
+        
+        /* --- Discover Section --- */
+        .discover-section {
+            background-color: var(--background-light);
+            padding: 50px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+        .discover-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .discover-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .discover-column {
+            background-color: var(--background-white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .discover-column:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .discover-column .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .discover-column .column-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+        .discover-column .view-more {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--alibaba-orange);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .discover-column .view-more:hover {
+            color: #e65c00;
+            text-decoration: underline;
+        }
+
+        /* --- Column 1: Top Ranking --- */
+        .top-ranking-content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .top-ranking-content .hot-selling-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .top-ranking-content .hot-selling-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        .top-ranking-main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .top-ranking-main-image {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-basis: 60%;
+            max-height: 180px;
+        }
+        .top-ranking-main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .top-ranking-main-image:hover img {
+            transform: scale(1.05);
+        }
+        .rating-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 10px;
+            backdrop-filter: blur(2px);
+        }
+        .top-ranking-bottom-images {
+            display: flex;
+            gap: 10px;
+            flex-basis: 40%;
+        }
+        .top-ranking-bottom-images .small-img-wrapper {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            height: 90px;
+        }
+        .top-ranking-bottom-images .small-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .small-img-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+            font-size: 0.75rem;
+            padding: 10px 8px 5px 8px;
+            box-sizing: border-box;
+        }
+        .slider-dots {
+            text-align: center;
+            margin-top: auto;
+            padding-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+        }
+        .slider-dots .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .slider-dots .dot.active {
+            background-color: var(--alibaba-orange);
+        }
+        
+        /* --- Column 2: New Arrivals --- */
+        .new-arrivals-content {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .new-arrivals-content .new-products-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .new-arrivals-image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+        .new-arrivals-image-grid .grid-item {
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            min-height: 120px;
+        }
+        .new-arrivals-image-grid .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .new-arrivals-image-grid .grid-item:hover img {
+            transform: scale(1.05);
+        }
+        .new-arrivals-bottom-card {
+            background-color: var(--background-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+            margin-top: auto;
+        }
+        .new-arrivals-bottom-card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .new-arrivals-bottom-card .text-content {
+            flex-grow: 1;
+        }
+        .new-arrivals-bottom-card .title {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .new-arrivals-bottom-card .description {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+
+        /* --- Column 3: Top Deals --- */
+        .top-deals-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex-grow: 1;
+        }
+        .top-deal-card {
+            background-color: var(--background-light);
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: background-color 0.3s ease;
+        }
+        .top-deal-card:hover {
+            background-color: #e9ecef;
+        }
+        .top-deal-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+        .top-deal-card .deal-text {
+            font-weight: 600;
+            font-size: 1rem;
+            flex: 1;
+        }
+        .deals-on-best-sellers-card {
+            background-color: var(--background-light);
+            padding: 15px;
+            border-radius: 8px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+        .deals-on-best-sellers-card p {
+            font-weight: bold;
+            font-size: 1rem;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .deals-on-best-sellers-card img {
+            width: 100%;
+            max-height: 150px;
+            object-fit: contain;
+            flex-grow: 1;
+        }
+        
+        /* === DIRECT FROM FACTORY SECTION === */
+        .direct-from-factory-section {
+            padding: 50px 0;
+            background-color: var(--background-white);
+        }
+        .factory-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .factory-card {
+            position: relative;
+            height: 450px;
+            border-radius: 12px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 25px;
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .factory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .factory-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+            transition: background-color 0.3s ease;
+        }
+        .factory-card:hover::before {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.7) 100%);
+        }
+        .card-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+        .card-title, .card-link {
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+        }
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .card-title .live-badge {
+            background-color: var(--alibaba-orange);
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+        .card-link {
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: white;
+        }
+
+        /* === TRADE WITH CONFIDENCE SECTION === */
+        .trade-confidence-section {
+            position: relative;
+            padding: 80px 0;
+            color: var(--text-white-primary);
+            background-image: url('https://images.pexels.com/photos/3771089/pexels-photo-3771089.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+        }
+        .trade-confidence-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .trade-confidence-section .container {
+            position: relative;
+            z-index: 2;
+        }
+        .trade-confidence-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            max-width: 550px;
+            margin-bottom: 40px;
+            line-height: 1.3;
+        }
+        .confidence-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+        .confidence-card {
+            background: rgba(30, 30, 30, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        .confidence-card .card-subheading {
+            font-size: 0.9rem;
+            color: var(--text-white-secondary);
+        }
+        .confidence-card .card-main-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 10px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .card-main-title.verified i {
+            color: #3b82f6; /* Blue color for verified icon */
+        }
+        .card-main-title.assurance i {
+            color: #f59e0b; /* Gold color for assurance icon */
+        }
+        .confidence-card .card-description {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-white-secondary);
+            flex-grow: 1; /* Pushes links to the bottom */
+        }
+        .confidence-card .card-links {
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+        .confidence-card .card-links a {
+            color: var(--text-white-primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .confidence-card .card-links a.learn-more {
+            text-decoration: underline;
+        }
+
+        /* === STREAMLINE ORDERING SECTION === */
+        .streamline-ordering-section {
+            padding: 80px 0;
+            background-color: var(--background-white);
+        }
+        .streamline-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            max-width: 550px;
+            margin-bottom: 50px;
+            line-height: 1.3;
+        }
+        .streamline-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 100px;
+            align-items: center;
+        }
+        .stepper {
+            list-style: none;
+            position: relative;
+            padding-left: 30px;
+        }
+        .stepper::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            bottom: 20px;
+            left: 0;
+            width: 2px;
+            background-color: var(--border-color);
+            transform: translateX(19px);
+        }
+        .stepper-item {
+            display: flex;
+            position: relative;
+            margin-bottom: 25px;
+        }
+        .stepper-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            background-color: var(--background-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-light);
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+        .stepper-text {
+            margin-left: 20px;
+            padding-top: 8px;
+        }
+        .stepper-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+        .stepper-description {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 8px;
+            line-height: 1.6;
+            display: none;
+        }
+        .stepper-item.active .stepper-icon {
+            background-color: var(--alibaba-orange);
+            border-color: var(--alibaba-orange);
+            color: white;
+        }
+        .stepper-item.active .stepper-title {
+            color: var(--text-dark);
+        }
+        .stepper-item.active .stepper-description {
+            display: block;
+        }
+        .image-column {
+            position: relative;
+        }
+        .image-column .main-image {
+            width: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .payment-card {
+            position: absolute;
+            right: -60px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--background-white);
+            border-radius: 12px;
+            padding: 20px;
+            width: 280px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        }
+        .payment-card p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .payment-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 1.8rem;
+            color: #a0a0a0;
+        }
+        .payment-logos i:hover {
+            color: var(--text-dark);
+        }
+        .currency-selectors {
+            position: absolute;
+            bottom: -20px;
+            right: 40px;
+            background-color: var(--background-white);
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 8px;
+        }
+        .currency-selectors span {
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .currency-selectors span:hover {
+            background-color: var(--background-light);
+        }
+        .currency-selectors span.active {
+            border-color: var(--border-color);
+        }
+        
+        /* === TAILORED DISCOUNTS SECTION === */
+        .tailored-discounts-section {
+            padding: 80px 0;
+            background-color: #F9F7F6;
+        }
+        .intro-text {
+            text-align: center;
+            max-width: 750px;
+            margin: 0 auto 50px auto;
+        }
+        .intro-text h2 {
+            font-size: 2.2rem;
+            color: #4A3A33;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+        .intro-text p {
+            font-size: 1rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        .intro-text .learn-more-link {
+            color: #4A3A33;
+            font-weight: 600;
+            text-decoration: underline;
+            font-size: 1rem;
+        }
+        .testimonial-card {
+            background-color: var(--background-white);
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.07);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+        }
+        .slider-arrow {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 10px;
+            transition: color 0.3s;
+        }
+        .slider-arrow:hover {
+            color: var(--text-dark);
+        }
+        .testimonial-slide {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-grow: 1;
+        }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-shrink: 0;
+        }
+        .testimonial-author img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .author-details h4 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        .author-details p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        .testimonial-quote {
+            position: relative;
+        }
+        .testimonial-quote p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+        .testimonial-quote::before, .testimonial-quote::after {
+            font-family: 'Times New Roman', serif;
+            font-weight: bold;
+            font-size: 5rem;
+            color: var(--background-light);
+            position: absolute;
+            line-height: 1;
+            z-index: -1;
+        }
+        .testimonial-quote::before {
+            content: '“';
+            top: -15px;
+            left: -35px;
+        }
+        .testimonial-quote::after {
+            content: '”';
+            bottom: -50px;
+            right: -35px;
+        }
+        
+        /* === CALL TO ACTION SECTION === */
+        .cta-section {
+            position: relative;
+            padding: 80px 0;
+            text-align: center;
+            color: var(--text-white-primary);
+            background-image: url('https://images.pexels.com/photos/4348401/pexels-photo-4348401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+            background-size: cover;
+            background-position: center;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(94, 43, 1, 0.85); /* Dark brownish-orange overlay */
+        }
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        .cta-content p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+        }
+        .cta-button {
+            display: inline-block;
+            background-color: var(--alibaba-orange);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            cursor: pointer;
+        }
+        .cta-button:hover {
+            transform: scale(1.05);
+            background-color: #ff8433;
+        }
+        
+        /* === EMPOWERING BUSINESS SECTION === */
+        .empowering-business-section {
+            padding: 80px 0;
+            background-color: var(--background-white);
+        }
+        .empowering-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+        }
+        .empowering-intro h2 {
+            font-size: 2.2rem;
+            color: #4A3A33;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .empowering-intro p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+        .empowering-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 25px;
+            align-items: stretch;
+        }
+        .grid-col-right {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        .empowering-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+        }
+        .empowering-card.large-card, .empowering-card.esg-card {
+            color: white;
+            align-items: flex-end;
+            padding: 30px;
+        }
+        .empowering-card.large-card::before, .empowering-card.esg-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+            z-index: 1;
+        }
+        .empowering-card .card-text-content {
+            position: relative;
+            z-index: 2;
+        }
+        .card-label {
+            color: var(--alibaba-orange);
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .empowering-card .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+        .location-card {
+            background-color: #F8F5F9;
+            padding: 30px;
+            background-image: url('https://s.alicdn.com/@img/imgextra/i3/O1CN015z7add1vQ53sOU48R_!!6000000006169-2-tps-422-205.png');
+            background-repeat: no-repeat;
+            background-position: 90% 50%;
+            background-size: 45%;
+            color: var(--text-dark);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+        }
+        .location-card .card-title {
+            font-size: 1.5rem;
+        }
+        .location-cities {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+        
+        /* === FINAL FOOTER === */
+        .pre-footer {
+            padding: 50px 0;
+            border-top: 1px solid var(--border-color);
+        }
+        .country-suppliers-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .country-suppliers-header h2 {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+        }
+        .country-suppliers-header .view-more {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+        .country-list {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .country-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+        .country-item img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+        }
+        .about-accordion {
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        .about-accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        .about-accordion-header h3 {
+            font-size: 1.2rem;
+        }
+        .about-accordion-body {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--text-light);
+        }
+        .site-footer {
+            background-color: var(--background-light);
+            padding: 60px 0 0 0;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 30px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .footer-col h4 {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+        .footer-col ul {
+            list-style: none;
+        }
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+        .footer-col ul a {
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+        .footer-col ul a:hover {
+            color: var(--alibaba-orange);
+        }
+        .footer-bottom {
+            padding: 30px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        .footer-payment-socials {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .payment-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+        .payment-icons img {
+            height: 20px;
+        }
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 1.2rem;
+        }
+        .social-icons a {
+            color: var(--text-light);
+            transition: color 0.3s;
+        }
+        .social-icons a:hover {
+            color: var(--text-dark);
+        }
+        .footer-apps {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+        .footer-apps span {
+            font-size: 0.9rem;
+        }
+        .footer-apps img {
+            height: 35px;
+        }
+        .footer-copyright {
+            background-color: #e9ecef;
+            padding: 15px 0;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* === CSS Code Ends Here === */
+    </style>
+</head>
+<body>
+
+    <header class="dark-header">
+        <div class="header-top-row">
+            <div class="container header-top-content">
+                <a href="#" class="header-logo-dark">
+                    <img src="https://s.alicdn.com/@img/tfs/TB1_uT8a5ERMeJjSspiXXbZLFXa-143-59.svg" alt="Alibaba Logo">
+                </a>
+                <nav class="header-top-nav">
+                    <a href="#" class="nav-item">
+                        <span>Deliver to:</span>
+                        <img src="https://flagcdn.com/w40/bd.png" alt="Bangladesh Flag" class="flag">
+                        <strong>BD</strong>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>English-BDT</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Cart</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Sign in</span>
+                    </a>
+                    <a href="#" class="create-account-btn">Create account</a>
+                </nav>
+            </div>
+        </div>
+        <div class="header-bottom-row">
+            <div class="container header-bottom-content">
+                <nav class="header-main-nav left">
+                    <div class="categories-dropdown-container">
+                        <a href="#" id="all-categories-link"><i class="fas fa-bars"></i> All categories</a>
+                        
+                        <div class="categories-dropdown-menu" id="categories-menu">
+                            <ul>
+                                <li class="dropdown-header">
+                                    <a href="#"><i class="fas fa-star"></i> <span>Categories for you</span></a>
+                                </li>
+                                <li><a href="#"><i class="fas fa-shirt"></i> <span>Apparel & Accessories</span></a></li>
+                                <li><a href="#"><i class="fas fa-headphones"></i> <span>Consumer Electronics</span></a></li>
+                                <li><a href="#"><i class="fas fa-house"></i> <span>Home & Garden</span></a></li>
+                                <li><a href="#"><i class="fas fa-basketball"></i> <span>Sports & Entertainment</span></a></li>
+                                <li><a href="#"><i class="fas fa-spa"></i> <span>Beauty</span></a></li>
+                                <li><a href="#"><i class="fas fa-gem"></i> <span>Jewelry, Eyewear & Watches</span></a></li>
+                                <li><a href="#"><i class="fas fa-shoe-prints"></i> <span>Shoes & Accessories</span></a></li>
+                                <li><a href="#"><i class="fas fa-briefcase"></i> <span>Luggage, Bags & Cases</span></a></li>
+                                <li><a href="#"><i class="fas fa-box-open"></i> <span>Packaging & Printing</span></a></li>
+                                <li><a href="#"><i class="fas fa-baby"></i> <span>Parents, Kids & Toys</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <a href="#">Featured selections</a>
+                    <a href="#">Order protections</a>
+                </nav>
+                <nav class="header-main-nav right">
+                    <a href="#">AI sourcing agent</a>
+                    <a href="#">Buyer Central</a>
+                    <a href="#">Help Center</a>
+                    <a href="#">App & extension</a>
+                    <a href="#">Become a supplier</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content container">
+                <p class="hero-subheading">● Learn about Alibaba.com</p>
+                <h1 class="hero-heading">The leading B2B ecommerce platform for global trade</h1>
+                <form class="hero-search-form">
+                    <input type="text" placeholder="What are you looking for..." class="hero-search-input">
+                    <button type="submit" class="hero-search-button">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </form>
+                <div class="frequently-searched">
+                    <span>Frequently searched:</span>
+                    <a href="#">iphones 15 pro max</a>
+                    <a href="#">labubu</a>
+                    <a href="#">watch</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <div class="container features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-table-cells"></i></div>
+                    <h3>Millions of business offerings</h3>
+                    <p>Explore products and suppliers for your business from millions of offerings worldwide.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Assured quality and transactions</h3>
+                    <p>Ensure production quality from verified suppliers, with your orders protected from payment to delivery.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-file-import"></i></div>
+                    <h3>One-stop trading solution</h3>
+                    <p>Order seamlessly from product/supplier search to order management, payment, and fulfillment.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-paragraph"></i></div>
+                    <h3>Tailored trading experience</h3>
+                    <p>Get curated benefits, such as exclusive discounts, enhanced protection, and extra support.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-carousel-section container">
+            <h2 class="section-title">Top Categories</h2>
+            <div class="carousel-wrapper">
+                <div class="carousel-arrow left" id="cat-carousel-prev"><i class="fas fa-chevron-left"></i></div>
+                <div class="category-carousel" id="cat-carousel">
+                    <div class="category-circle">
+                        <i class="fa-solid fa-gem"></i>
+                        <span>Jewelry, Eyewear...</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-cogs"></i>
+                        <span>Industrial Machinery</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-couch"></i>
+                        <span>Furniture</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span>Luggage, Bags & Cases</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-car"></i>
+                        <span>Vehicle Accessories...</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-truck"></i>
+                        <span>Vehicles & Transportation</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-gift"></i>
+                        <span>Gifts & Crafts</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-wrench"></i>
+                        <span>Tools & Hardware</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-baby"></i>
+                        <span>Mother, Kids & Toys</span>
+                    </div>
+                    <div class="category-circle">
+                        <i class="fa-solid fa-home"></i>
+                        <span>Construction & Real Estate</span>
+                    </div>
+                     <div class="category-circle">
+                        <i class="fa-solid fa-shoe-prints"></i>
+                        <span>Shoes & Accessories</span>
+                    </div>
+                     <div class="category-circle">
+                        <i class="fa-solid fa-tv"></i>
+                        <span>Home Appliances</span>
+                    </div>
+                </div>
+                <div class="carousel-arrow right" id="cat-carousel-next"><i class="fas fa-chevron-right"></i></div>
+            </div>
+        </section>
+
+        <section class="discover-section">
+            <div class="container">
+                <h2 class="discover-title">Discover your next business opportunity</h2>
+                <div class="discover-grid">
+                    <div class="discover-column">
+                        <div class="column-header">
+                            <h3 class="column-title">Top ranking</h3>
+                            <a href="#" class="view-more">View more</a>
+                        </div>
+                        <div class="top-ranking-content">
+                             <p class="hot-selling-title">Hot selling</p>
+                             <p class="hot-selling-desc">Plus Size Men's Sleepwear</p>
+                             <div class="top-ranking-main-content">
+                                 <div class="top-ranking-main-image">
+                                     <img src="https://storage.googleapis.com/aai-web-samples/image_f9031b/H9f5e47274f4b467fa04b36080b0187b0Y.jpg" alt="Pink Robe">
+                                     <div class="rating-badge">3.9</div>
+                                 </div>
+                                 <div class="top-ranking-bottom-images">
+                                     <div class="small-img-wrapper">
+                                         <img src="https://s.alicdn.com/@sc04/kf/Hee99676cf23948679059a491ceee8646j.jpg_350x350.jpg" alt="Scarf, Hat & Glove Sets">
+                                         <span class="small-img-title">Scarf, Hat & Glove Sets</span>
+                                     </div>
+                                     <div class="small-img-wrapper">
+                                         <img src="https://s.alicdn.com/@sc04/kf/H7d4d7f7e7d6f4b8a8b1b5e5a0e4b8a8bV.jpg_350x350.jpg" alt="Another Robe">
+                                         <span class="small-img-title">Another Robe</span>
+                                     </div>
+                                 </div>
+                                 <div class="slider-dots">
+                                     <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+                                 </div>
+                               </div>
+                        </div>
+                    </div>
+        
+                    <div class="discover-column">
+                        <div class="column-header">
+                            <h3 class="column-title">New arrivals</h3>
+                            <a href="#" class="view-more">View more</a>
+                        </div>
+                        <div class="new-arrivals-content">
+                             <p class="new-products-title">139,000+ products added today</p>
+                             <div class="new-arrivals-image-grid">
+                                 <div class="grid-item">
+                                     <img src="https://storage.googleapis.com/aai-web-samples/image_f9031b/Hbd0514003c1442b29e51125dc10bbf374.jpg" alt="Blue Sweater">
+                                     <span class="small-img-title">Blue Sweater</span>
+                                 </div>
+                                 <div class="grid-item">
+                                     <img src="https://storage.googleapis.com/aai-web-samples/image_f9031b/H5d8d173aff4a4d15af3900839a291ee0G.jpg" alt="Beige Sweater">
+                                     <span class="small-img-title">Beige Sweater</span>
+                                 </div>
+                                 <div class="grid-item">
+                                     <img src="https://storage.googleapis.com/aai-web-samples/image_f9031b/Hdfc6bef375714acb8ff7ca9672da7fafD.jpg" alt="Brown Sweater">
+                                     <span class="small-img-title">Brown Sweater</span>
+                                 </div>
+                                 <div class="grid-item">
+                                     <img src="https://storage.googleapis.com/aai-web-samples/image_f9031b/Hd57aff55fb6e40af830e8b1ba41e90fdH.png" alt="Bear Hat and Scarf Set">
+                                     <span class="small-img-title">Bear Hat & Scarf</span>
+                                 </div>
+                             </div>
+                             <div class="new-arrivals-bottom-card">
+                                 <img src="https://storage.googleapis.com/aai-web-samples/image_%20amr%20website%20er%20first%20e%20pic%20er%20moto%20view%20make%20kore%20deo" alt="Bottom card product">
+                                 <div class="text-content">
+                                     <span class="title">Discover new products</span>
+                                     <span class="description">10,000+ items daily</span>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
+        
+                    <div class="discover-column">
+                        <div class="column-header">
+                            <h3 class="column-title">Top deals</h3>
+                            <a href="#" class="view-more">View more</a>
+                        </div>
+                        <div class="top-deals-content">
+                            <div class="top-deal-card">
+                                <img src="https://s.alicdn.com/@sc04/kf/H0a6b1e3f8b9e4b6e8a0b1e3f8b9e4b6eS.jpg_350x350.jpg" alt="Deal product 1">
+                                <span class="deal-text">Weekly Deals: Up to 30% OFF</span>
+                            </div>
+                            <div class="deals-on-best-sellers-card">
+                                <p>Deals on Best Sellers</p>
+                                <img src="https://s.alicdn.com/@sc04/kf/H7d4d7f7e7d6f4b8a8b1b5e5a0e4b8a8bV.jpg_350x350.jpg" alt="Best seller deal">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="direct-from-factory-section">
+            <div class="container">
+                <h2 class="section-title-left">Source direct-from-factory</h2>
+                <div class="factory-grid">
+                    <div class="factory-card" style="background-image: url('https://image.pollinations.ai/prompt/Image%201');">
+                        <div class="card-content">
+                            <div class="card-title">
+                                <span class="live-badge"><i class="fas fa-video"></i></span>
+                                Take factory live tours
+                            </div>
+                            <a href="#" class="card-link">View LIVE &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="factory-card" style="background-image: url('https://image.pollinations.ai/prompt/Image%202');">
+                        <div class="card-content">
+                            <div class="card-title">Get samples</div>
+                            <a href="#" class="card-link">View more &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="factory-card" style="background-image: url('https://image.pollinations.ai/prompt/Image%203');">
+                        <div class="card-content">
+                            <div class="card-title">Connect with top-ranking manufacturers</div>
+                            <a href="#" class="card-link">View more &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <section class="trade-confidence-section">
+            <div class="container">
+                <h2 class="trade-confidence-title">Trade with confidence from production quality to purchase protection</h2>
+                <div class="confidence-cards-grid">
+                    <div class="confidence-card">
+                        <p class="card-subheading">Ensure production quality with</p>
+                        <h3 class="card-main-title verified">
+                            <i class="fas fa-check-circle"></i> Verified Supplier
+                        </h3>
+                        <p class="card-description">
+                            Connect with a variety of suppliers with third-party-verified credentials and capabilities. Look for the "Verified" logo to begin sourcing with experienced suppliers your business could rely on.
+                        </p>
+                        <div class="card-links">
+                            <a href="#"><i class="fas fa-play-circle"></i> Watch video</a>
+                            <a href="#" class="learn-more">Learn more</a>
+                        </div>
+                    </div>
+                    <div class="confidence-card">
+                        <p class="card-subheading">Protect your purchase with</p>
+                        <h3 class="card-main-title assurance">
+                            <i class="fas fa-shield-halved"></i> Trade Assurance
+                        </h3>
+                        <p class="card-description">
+                            Source confidently with access to secure payment options, protection against product or shipping issues, and mediation support for any purchase-related concerns when you order and pay on Alibaba.com.
+                        </p>
+                        <div class="card-links">
+                            <a href="#"><i class="fas fa-play-circle"></i> Watch video</a>
+                            <a href="#" class="learn-more">Learn more</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="streamline-ordering-section">
+            <div class="container">
+                <h2 class="streamline-title">Streamline ordering from search to fulfillment, all in one place</h2>
+                <div class="streamline-content">
+                    <div class="stepper-column">
+                        <ul class="stepper">
+                            <li class="stepper-item">
+                                <div class="stepper-icon"><i class="fas fa-magnifying-glass"></i></div>
+                                <div class="stepper-text">
+                                    <h3 class="stepper-title">Search for matches</h3>
+                                </div>
+                            </li>
+                            <li class="stepper-item">
+                                <div class="stepper-icon"><i class="fas fa-check"></i></div>
+                                <div class="stepper-text">
+                                    <h3 class="stepper-title">Identify the right one</h3>
+                                </div>
+                            </li>
+                            <li class="stepper-item active">
+                                <div class="stepper-icon"><i class="fas fa-credit-card"></i></div>
+                                <div class="stepper-text">
+                                    <h3 class="stepper-title">Pay with confidence</h3>
+                                    <p class="stepper-description">Pay for your order in over 20 currencies via 20+ secure payment methods, including flexible payment terms.</p>
+                                </div>
+                            </li>
+                            <li class="stepper-item">
+                                <div class="stepper-icon"><i class="fas fa-box"></i></div>
+                                <div class="stepper-text">
+                                    <h3 class="stepper-title">Fulfill with transparency</h3>
+                                </div>
+                            </li>
+                            <li class="stepper-item">
+                                <div class="stepper-icon"><i class="fas fa-user-gear"></i></div>
+                                <div class="stepper-text">
+                                    <h3 class="stepper-title">Manage with ease</h3>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="image-column">
+                        <img src="https://images.pexels.com/photos/5676744/pexels-photo-5676744.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Woman ordering online" class="main-image">
+                        <div class="payment-card">
+                            <p>Pay online via our checkout</p>
+                            <div class="payment-logos">
+                                <i class="fab fa-cc-visa"></i>
+                                <i class="fab fa-cc-mastercard"></i>
+                                <i class="fab fa-cc-amex"></i>
+                                <i class="fab fa-cc-paypal"></i>
+                                <i class="fab fa-apple-pay"></i>
+                                <i class="fab fa-google-pay"></i>
+                            </div>
+                        </div>
+                        <div class="currency-selectors">
+                            <span class="active">USD - $</span>
+                            <span>AED - د.إ</span>
+                            <span>GBP - £</span>
+                            <span>EUR - €</span>
+                            <span>JPY - ¥</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <section class="tailored-discounts-section">
+            <div class="container">
+                <div class="intro-text">
+                    <h2>Get tailored discounts, services, and tools for your business stage.</h2>
+                    <p>Grow with curated benefits offered by the free Alibaba.com Membership, whether you are a small business needing the essentials to start sourcing or a well-established enterprise looking for tools and solutions for more complex orders.</p>
+                    <a href="#" class="learn-more-link">Learn more</a>
+                </div>
+                <div class="testimonial-slider">
+                    <div class="testimonial-card">
+                        <button class="slider-arrow left"><i class="fas fa-chevron-left"></i></button>
+                        <div class="testimonial-slide">
+                            <div class="testimonial-author">
+                                <img src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Eva Jane">
+                                <div class="author-details">
+                                    <h4>Eva Jane</h4>
+                                    <p>Founder of Eva Jane Beauty</p>
+                                </div>
+                            </div>
+                            <div class="testimonial-quote">
+                                <p>"As an entrepreneur who is deeply involved in the Beauty industry, I have been very devoted to creating my original products. Alibaba.com has been my trusted partner in this process."</p>
+                            </div>
+                        </div>
+                        <button class="slider-arrow right"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="cta-section">
+            <div class="cta-content container">
+                <h2>Ready to get started?</h2>
+                <p>Explore millions of products from trusted suppliers by signing up today!</p>
+                <a href="#" class="cta-button">Sign up</a>
+            </div>
+        </section>
+    
+        <section class="empowering-business-section">
+            <div class="container">
+                <div class="empowering-intro">
+                    <h2>Empowering businesses through global trade</h2>
+                    <p>Alibaba.com offers one-stop B2B trading solutions for global small and medium-sized businesses, empowering them to transform through digital trade, grasp opportunities, and accelerate growth internationally.</p>
+                </div>
+                <div class="empowering-grid">
+                    <div class="grid-col-left">
+                        <div class="empowering-card large-card" style="background-image: url('https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+                            <div class="card-text-content">
+                                <span class="card-label">Our Mission</span>
+                                <h3 class="card-title">Make it easy to do business anywhere.</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid-col-right">
+                        <div class="empowering-card location-card">
+                            <div>
+                                <span class="card-label">Our Locations</span>
+                                <h3 class="card-title">We have teams around the world.</h3>
+                            </div>
+                            <div class="location-cities">
+                                <p>Hangzhou, China<br>Paris, France<br>Munich, Germany<br>Tokyo, Japan<br>Seoul, Korea<br>London, UK<br>New York, US<br>...<br>and many other locations worldwide.</p>
+                            </div>
+                        </div>
+                        <div class="empowering-card esg-card" style="background-image: url('https://images.pexels.com/photos/414837/pexels-photo-414837.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');">
+                            <div class="card-text-content">
+                                <span class="card-label">Our ESG Promises</span>
+                                <h3 class="card-title">Responsible technology. Sustainable future.</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <div class="pre-footer">
+        <div class="container">
+            <div class="country-suppliers">
+                <div class="country-suppliers-header">
+                    <h2>Find suppliers by country or region</h2>
+                    <a href="#" class="view-more">View more &rarr;</a>
+                </div>
+                <div class="country-list">
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w80/it.png" alt="Italy">
+                        <span>Italy</span>
+                    </div>
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w80/tr.png" alt="Türkiye">
+                        <span>Türkiye</span>
+                    </div>
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w80/my.png" alt="Malaysia">
+                        <span>Malaysia</span>
+                    </div>
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w80/kr.png" alt="South Korea">
+                        <span>South Korea</span>
+                    </div>
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w80/vn.png" alt="Vietnam">
+                        <span>Vietnam</span>
+                    </div>
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w80/ru.png" alt="Russia">
+                        <span>Russia</span>
+                    </div>
+                    <div class="country-item">
+                        <img src="https://flagcdn.com/w80/th.png" alt="Thailand">
+                        <span>Thailand</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-accordion">
+                <div class="about-accordion-header">
+                    <h3>About Alibaba.com</h3>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="about-accordion-body">
+                    <p>Founded in 1999, <strong>Alibaba.com</strong> is the leading B2B e-commerce platform for simplified global sourcing. <strong>Alibaba.com</strong> offers AI-powered B2B sourcing solutions, from product and supplier search, online order placement, payment, inspection, logistics services, to after-sales support, providing worldwide business buyers with a more simplified, efficient, professional, and secure sourcing process to grow and succeed....</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Get support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Live chat</a></li>
+                        <li><a href="#">Check order status</a></li>
+                        <li><a href="#">Refunds</a></li>
+                        <li><a href="#">Report abuse</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Payments and protections</h4>
+                    <ul>
+                        <li><a href="#">Safe and easy payments</a></li>
+                        <li><a href="#">Money-back policy</a></li>
+                        <li><a href="#">On-time shipping</a></li>
+                        <li><a href="#">After-sales protections</a></li>
+                        <li><a href="#">Product monitoring services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Source on Alibaba.com</h4>
+                    <ul>
+                        <li><a href="#">Request for Quotation</a></li>
+                        <li><a href="#">Membership program</a></li>
+                        <li><a href="#">Alibaba.com Logistics</a></li>
+                        <li><a href="#">Sales tax and VAT</a></li>
+                        <li><a href="#">Alibaba.com Reads</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Sell on Alibaba.com</h4>
+                    <ul>
+                        <li><a href="#">Start selling</a></li>
+                        <li><a href="#">Seller Central</a></li>
+                        <li><a href="#">Become a Verified Supplier</a></li>
+                        <li><a href="#">Partnerships</a></li>
+                        <li><a href="#">Download the app for suppliers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Get to know us</h4>
+                    <ul>
+                        <li><a href="#">About Alibaba.com</a></li>
+                        <li><a href="#">Corporate responsibility</a></li>
+                        <li><a href="#">News center</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-payment-socials">
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                    <div class="payment-icons">
+                        <img src="https://s.alicdn.com/@img/imgextra/i2/O1CN0131oQdM1sWO2T3iN8v_!!6000000005777-2-tps-42-26.png" alt="ID Check">
+                        <img src="https://s.alicdn.com/@img/imgextra/i3/O1CN01j4k2jV1sWO2Qd5zI3_!!6000000005777-2-tps-46-26.png" alt="Verified Main">
+                        <img src="https://s.alicdn.com/@img/imgextra/i1/O1CN01w5Oqj31sWO2Oo82W4_!!6000000005777-2-tps-46-26.png" alt="Secured Payment">
+                        <img src="https://s.alicdn.com/@img/imgextra/i1/O1CN01WIIEaT1sWO2L5p5o7_!!6000000005777-2-tps-42-26.png" alt="Logistics Inspection">
+                        <img src="https://ae01.alicdn.com/kf/HTB1q.GjJFXXXXcVXVXXq6xXFXXXw/200421590/HTB1q.GjJFXXXXcVXVXXq6xXFXXXw.png" alt="Visa">
+                        <img src="https://ae01.alicdn.com/kf/HTB1I4.rJFXXXXaQXpXXq6xXFXXXd/200421590/HTB1I4.rJFXXXXaQXpXXq6xXFXXXd.png" alt="Mastercard">
+                        <img src="https://ae01.alicdn.com/kf/HTB11r1nJpXXXXX2XXXXq6xXFXXXD/200421590/HTB11r1nJpXXXXX2XXXXq6xXFXXXD.png" alt="PayPal">
+                        <img src="https://ae01.alicdn.com/kf/HTB14i0CJFXXXXbKXpXXq6xXFXXXP/200421590/HTB14i0CJFXXXXbKXpXXq6xXFXXXP.png" alt="Apple Pay">
+                        <img src="https://ae01.alicdn.com/kf/HTB1wD6sJpXXXXXmXpXXq6xXFXXXD/200421590/HTB1wD6sJpXXXXXmXpXXq6xXFXXXD.png" alt="Google Pay">
+                    </div>
+                </div>
+                <div class="footer-apps">
+                    <span>Trade on the go with the <strong>Alibaba.com</strong> app</span>
+                    <a href="#"><img src="https://s.alicdn.com/@img/tfs/TB10526ff6H8KJjy0FjXXaXwVXa-142-48.png" alt="App Store"></a>
+                    <a href="#"><img src="https://s.alicdn.com/@img/tfs/TB1oRsieffH8KJjy0FjXXaxepXa-150-48.png" alt="Google Play"></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <p>© 1999-2025 Alibaba.com. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoriesLink = document.getElementById('all-categories-link');
+            const categoriesMenu = document.getElementById('categories-menu');
+
+            if (categoriesLink && categoriesMenu) {
+                categoriesLink.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevents the link from navigating
+                    event.stopPropagation(); // Prevents the window click listener from firing immediately
+                    categoriesMenu.classList.toggle('show');
+                });
+
+                // Close the dropdown if the user clicks outside of it
+                window.addEventListener('click', function(event) {
+                    if (!categoriesMenu.contains(event.target) && !categoriesLink.contains(event.target)) {
+                        if (categoriesMenu.classList.contains('show')) {
+                            categoriesMenu.classList.remove('show');
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+    </body>
+</html>
